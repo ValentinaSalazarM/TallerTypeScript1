@@ -1,0 +1,38 @@
+h1 {
+  font-family: monospace;
+  font-size: 50px;
+  text-align: center;
+  background-color: GAINSBORO;
+}
+h2{
+    font-family: monospace;
+    text-align: center;
+    font-size: 32px;
+}
+div {
+  font-family: monospace;
+  font-size: 18px;
+  border: 20px gray;
+  margin: 3px;
+  padding: 5px;
+}
+#centrador{
+    position: relative;
+    width: 400px;
+    height: 400px;
+}
+  
+  #imagen{
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+  }
+  #color{
+      background-color: lightskyblue;
+  }
+  p{
+      text-align: center;
+  }
