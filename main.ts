@@ -9,11 +9,18 @@ let studentTbody: HTMLElement = document.getElementById('student')!;
 let student1:Student = new Student ("201815243", "1.193.548.096", 18, "Calle 63 71 F 72", 3103010224, "kv.salazar@uniandes.edu.co", "Ingeniería de sistemas");
 
 const btnfilterByName: HTMLElement = document.getElementById("button-filterByName")!;
+const btnfilterByCredits: HTMLElement = document.getElementById("button-filterByCredits")!;
+
 const inputSearchBox: HTMLInputElement = <HTMLInputElement>document.getElementById("search-box")!;
+const minCredits: HTMLInputElement = <HTMLInputElement>document.getElementById("minimum")!;
+const maxCredits: HTMLInputElement = <HTMLInputElement>document.getElementById("maximum")!;
+
 const totalCreditElm: HTMLElement = document.getElementById("total-credits")!;
 
 
 btnfilterByName.onclick = () => applyFilterByName();
+btnfilterByCredits.onclick = () => applyFilterByCredits();
+
 
 renderCoursesInTable(dataCourses);
 renderStudentInformation(student1);
@@ -74,6 +81,23 @@ function applyFilterByName() {
   clearCoursesInTable();
   let coursesFiltered: Course[] = searchCourseByName(text, dataCourses);
   renderCoursesInTable(coursesFiltered);
+}
+
+function applyFilterByCredits() {
+  let number1 = minCredits.value;
+  let number2 = maxCredits.value;
+  
+  number1 = (number1 == null) ? '' : number1;
+  number2 = (number2 == null) ? '' : number2;
+
+  clearCoursesInTable();
+  let coursesFiltered: Course[] = searchCourseByCredits(number1, number2, dataCourses);
+  renderCoursesInTable(coursesFiltered);
+}
+
+function searchCourseByCredits(min: string, max: string, courses: Course[]) {
+  return (min && max ) === '' ? dataCourses : courses.filter(c =>
+    c.credits >= parseInt(min) && c.credits <= parseInt (max));
 }
 
 function searchCourseByName(nameKey: string, courses: Course[]) {

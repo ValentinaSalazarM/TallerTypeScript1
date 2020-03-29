@@ -4,9 +4,13 @@ var coursesTbody = document.getElementById('courses');
 var studentTbody = document.getElementById('student');
 var student1 = new Student("201815243", "1.193.548.096", 18, "Calle 63 71 F 72", 3103010224, "kv.salazar@uniandes.edu.co", "Ingeniería de sistemas");
 var btnfilterByName = document.getElementById("button-filterByName");
+var btnfilterByCredits = document.getElementById("button-filterByCredits");
 var inputSearchBox = document.getElementById("search-box");
+var minCredits = document.getElementById("minimum");
+var maxCredits = document.getElementById("maximum");
 var totalCreditElm = document.getElementById("total-credits");
 btnfilterByName.onclick = function () { return applyFilterByName(); };
+btnfilterByCredits.onclick = function () { return applyFilterByCredits(); };
 renderCoursesInTable(dataCourses);
 renderStudentInformation(student1);
 totalCreditElm.innerHTML = "" + getTotalCredits(dataCourses);
@@ -48,6 +52,20 @@ function applyFilterByName() {
     clearCoursesInTable();
     var coursesFiltered = searchCourseByName(text, dataCourses);
     renderCoursesInTable(coursesFiltered);
+}
+function applyFilterByCredits() {
+    var number1 = minCredits.value;
+    var number2 = maxCredits.value;
+    number1 = (number1 == null) ? '' : number1;
+    number2 = (number2 == null) ? '' : number2;
+    clearCoursesInTable();
+    var coursesFiltered = searchCourseByCredits(number1, number2, dataCourses);
+    renderCoursesInTable(coursesFiltered);
+}
+function searchCourseByCredits(min, max, courses) {
+    return (min && max) === '' ? dataCourses : courses.filter(function (c) {
+        return c.credits >= parseInt(min) && c.credits <= parseInt(max);
+    });
 }
 function searchCourseByName(nameKey, courses) {
     return nameKey === '' ? dataCourses : courses.filter(function (c) {
