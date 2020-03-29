@@ -1,16 +1,22 @@
 import { Course } from './course.js';
-
+import { Student } from './student.js';
 import { dataCourses } from './dataCourses.js';
+import { dataStudent } from './dataStudent.js';
+
 
 let coursesTbody: HTMLElement = document.getElementById('courses')!;
+let studentTbody: HTMLElement = document.getElementById('student')!;
+let student1:Student = new Student ("201815243", "1.193.548.096", 18, "Calle 63 71 F 72", 3103010224, "kv.salazar@uniandes.edu.co", "Ingeniería de sistemas");
+
 const btnfilterByName: HTMLElement = document.getElementById("button-filterByName")!;
-const inputSearchBox: HTMLInputElement = <HTMLInputElement> document.getElementById("search-box")!;
+const inputSearchBox: HTMLInputElement = <HTMLInputElement>document.getElementById("search-box")!;
 const totalCreditElm: HTMLElement = document.getElementById("total-credits")!;
 
 
 btnfilterByName.onclick = () => applyFilterByName();
 
 renderCoursesInTable(dataCourses);
+renderStudentInformation(student1);
 
 totalCreditElm.innerHTML = `${getTotalCredits(dataCourses)}`
 
@@ -25,11 +31,44 @@ function renderCoursesInTable(courses: Course[]): void {
     coursesTbody.appendChild(trElement);
   });
 }
- 
 
- 
+function renderStudentInformation(student: Student): void {
+  console.log('Desplegando información del estudiante');
 
-function applyFilterByName() { 
+  let trElement1 = document.createElement("tr");
+  trElement1.innerHTML = `<th scope="row">Código</th> <td>${student.code}</td>`;
+  studentTbody.appendChild (trElement1);
+
+  let trElement2 = document.createElement ("tr");
+  trElement2.innerHTML = `<th scope="row">Cédula</th> <td>${student.identifier}</td>`;
+  studentTbody.appendChild (trElement2);
+
+  let trElement3 = document.createElement("tr");
+  trElement3.innerHTML = `<th scope="row">Edad</th> <td>${student.age}</td>`;
+  studentTbody.appendChild (trElement3);
+
+  let trElement4 = document.createElement("tr");
+  trElement4.innerHTML = `<th scope="row">Dirección</th> <td>${student.address}</td>`;
+  studentTbody.appendChild (trElement4);
+
+  
+  let trElement5 = document.createElement("tr");
+  trElement5.innerHTML = `<th scope="row">Teléfono</th> <td>${student.phone}</td>`;
+  studentTbody.appendChild (trElement5);
+
+  
+  let trElement6 = document.createElement("tr");
+  trElement6.innerHTML = `<th scope="row">Correo</th> <td>${student.email}</td>`;
+  studentTbody.appendChild (trElement6);
+
+  let trElement7 = document.createElement("tr");
+  trElement7.innerHTML = `<th scope="row">Carrera</th> <td>${student.career}</td>`;
+  studentTbody.appendChild (trElement7);
+
+}
+
+
+function applyFilterByName() {
   let text = inputSearchBox.value;
   text = (text == null) ? '' : text;
   clearCoursesInTable();
@@ -38,7 +77,7 @@ function applyFilterByName() {
 }
 
 function searchCourseByName(nameKey: string, courses: Course[]) {
-  return nameKey === '' ? dataCourses : courses.filter( c => 
+  return nameKey === '' ? dataCourses : courses.filter(c =>
     c.name.match(nameKey));
 }
 
@@ -53,7 +92,7 @@ function clearCoursesInTable() {
   while (coursesTbody.hasChildNodes()) {
     if (coursesTbody.firstChild != null) {
       coursesTbody.removeChild(coursesTbody.firstChild);
-     
+
     }
   }
 }
